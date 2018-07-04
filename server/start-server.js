@@ -8,8 +8,6 @@ const app = express();
 
 import App from '../front/src/App';
 
-
-
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
@@ -74,7 +72,7 @@ app.get('/product/:id', function(req,res) {
   },'__ssr_product_page__')
 }) 
 
-
+// restful api
 app.get('/api/user/:id', function(req, res) {
   const responseBody = {
     userAgent: req.get('User-Agent'),
@@ -83,7 +81,6 @@ app.get('/api/user/:id', function(req, res) {
   res.send(responseBody);
 });
 
-// restful api
 app.get('/api/product/:id', function(req,res) {
   const responseBody = {
     userAgent: req.get('User-Agent'),
