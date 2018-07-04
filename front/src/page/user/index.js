@@ -19,7 +19,6 @@ export default class User extends React.Component {
         message: `Send from ${ res.data.userAgent }, request user id is ${ res.data.id }`
       })
     }).catch(err => {
-      console.log(err);
       this.setState({
         message: 'error'
       })
