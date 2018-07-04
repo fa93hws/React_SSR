@@ -6,7 +6,22 @@ This working demo illustrates a server side rendering (SSR) using the dependency
 * Node.js instance is available at the back-end .
 *If other framework other than node like Spring/.Net/PHP/Rails is used, you could establish another Node process and make a reverse proxy using nginx or anything else.*
 
-## How do I xxx
+## Procedure
+The procedure is very similar to one of the existing method (using the Redux).
+
+When node server receive a request that need server side rendering, it will first make any necessary Ajax request and then render the page corresponding the current url and Ajax result.
+
+After rendered, the content will be inject to the root div from the index.html.
+
+Besides, an variable that contains the ajax result will also be attached into the index.html and it must be somewhere before the bundle.js is loaded. (I prefer to put it in the head)
+
+Back to the front end. The client at the initial load will receive a fully rendered HTML file, a bundle.js at the end of the HTML file which describe the React app and the preAjax result at the top.
+
+When React app is loaded from the bundle.js, it will first look at the url and find out the component that is necessary. During rendering these component (see lifecycle of react https://reactjs.org/docs/state-and-lifecycle.html), the compnentDidMount and compentWillMount where the ajax requests may be located will be called and their behaviour should be mocked. Instead of make a real time consuming ajax request, we inject the script into them and let them use the data that is already provided from the server (in the script element in the head) directly.
+
+By doing so, the consistence can be preserved and hence the DOM tree rendered by React will be exactly the same as the HTML files comes from the server, which prevent the real rerendering in the client.
+
+## Explaination
 1. Render react element to string: 
 
 	using `renderToString` provided by `react-dom/server`
