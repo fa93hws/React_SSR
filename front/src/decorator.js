@@ -21,19 +21,29 @@ export function enableSSR(varName) {
   } // main decorator
 } // function wrapper
 
-export function injectSSRState(target) {
-  class Output extends target {
-    constructor(props) {
-      super(props);
-      if (typeof props.staticContext !== 'undefined' && props.staticContext.ssr === true) {
-        this.state = {
-          ...this.state,
-          ...props.staticContext.data,
-          pageAjaxStatus: EAjaxStatus.done
-        } // setState
-      } // if comes from the server side
-      
-    } // constructor
-  } // injected class
-  return Output;
+export function injectSSRState(varName) {
+  return (target) => {
+    class Output extends target {
+      constructor(props) {
+        super(props);
+        if (typeof props.staticContext !== 'undefined' && props.staticContext.ssr === true) {
+          this.state = {
+            ...this.state,
+            ...props.staticContext.data,
+            pageAjaxStatus: EAjaxStatus.done
+          } // setState
+        } // if calling comes from the server side
+        else if (typeof window !== 'undefined' && varName in window && window[varName].ssr === true) {
+          const data = window[varName];
+          this.setState({
+            ...this.state,
+            ...data,
+            pageAjaxStatus: EAjaxStatus.done
+          })
+        } // front end rendering, but there is data comes from the server
+      } // constructor
+    } // injected class
+    return Output;
+  }
 }
+

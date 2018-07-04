@@ -5,7 +5,7 @@ import { EAjaxStatus } from '../../enums';
 import productApi from '../../api/product';
 import ProductComp from './comp';
 
-@injectSSRState
+@injectSSRState('__ssr_product_page__')
 export default class Product extends React.Component {
   constructor(props) {
     super(props);

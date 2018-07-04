@@ -5,7 +5,7 @@ import { EAjaxStatus } from '../../enums';
 import userApi from '../../api/user';
 import UserComp from './comp';
 
-@injectSSRState
+@injectSSRState('__ssr_user_page__')
 export default class User extends React.Component {
   constructor(props) {
     super(props);
