@@ -28,6 +28,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./ -d dist",
     "start": "set NODE_ENV=development&& nodemon ./start-server.js --exec babel-node --presets=es2015,stage-2 --plugins=transform-decorators-legacy",
+    "start-linux": "export NODE_ENV=development&& nodemon ./start-server.js --exec babel-node --presets=es2015,stage-2 --plugins=transform-decorators-legacy",
     "start-once": "set NODE_ENV=development&& babel-node ./start-server.js --presets es2015,stage-2 --plugins=transform-decorators-legacy"
   },
   "author": "",
