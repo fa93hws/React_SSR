@@ -99,7 +99,7 @@ see https://reactjs.org/docs/react-dom-server.html
 	  <!-- you can set any unique id you like  -->
 	  <title>React App</title>
 	</head>
-```
+	```
 
 	During the backend rendering, replace not only the root div with the rendered html string, buto also the placeholder script element with the one contains the real ajax reply in json format. Leave the data to `window` so that all component can access it.
 
