@@ -1,26 +1,26 @@
 import * as React from 'react';
 
+import { injectSSRState } from '../../decorator';
 import { EAjaxStatus } from '../../enums';
 import userApi from '../../api/user';
 import UserComp from './comp';
 
+@injectSSRState
 export default class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userID: this.props.match.params.id,
-      message: '',
+      userAgent: '',
+      id: -1,
       pageAjaxStatus: EAjaxStatus.notSubmitted
     }
   }
   componentDidMount() {
     userApi.getUser(this.state.userID).then(res => {
       this.setState({ 
-        message: `Send from ${ res.data.userAgent }, request user id is ${ res.data.id }`
-      })
-    }).catch(err => {
-      this.setState({
-        message: 'error'
+        userAgent: res.data.userAgent,
+        id: res.data.id
       })
     }).finally(() => {
       this.setState({ pageAjaxStatus: EAjaxStatus.done });
@@ -30,7 +30,7 @@ export default class User extends React.Component {
     if (this.state.pageAjaxStatus === EAjaxStatus.done) {
       return (
         <UserComp
-          message={ this.state.message }
+          { ...this.state }
         />
       )
     } else {

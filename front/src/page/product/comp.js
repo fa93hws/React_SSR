@@ -9,13 +9,16 @@ export default class ProductComp extends React.Component {
       <main>
         <article>
           <h1>
-            This is the product page
+            This is the Product page
           </h1>
           <h3>
             Product Info:
           </h3>
           <p>
-            { this.props.message }
+            Data comes from { this.props.userAgent }
+          </p>
+          <p>
+            Data: { this.props.id }
           </p>
         </article>
       </main>

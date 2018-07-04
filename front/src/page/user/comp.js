@@ -2,7 +2,8 @@ import * as React from 'react';
 
 export default class UserComp extends React.Component {
   static defaultProps = {
-    message: ''
+    userAgent: '',
+    id: -1,
   }
   render() {
     return (
@@ -15,7 +16,10 @@ export default class UserComp extends React.Component {
             User Info:
           </h3>
           <p>
-            { this.props.message }
+            Data comes from { this.props.userAgent }
+          </p>
+          <p>
+            Data: { this.props.id }
           </p>
         </article>
       </main>

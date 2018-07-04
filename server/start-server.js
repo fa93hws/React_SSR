@@ -28,8 +28,7 @@ const SSRUtils = {
     const placeholder = `<div id="root"></div>`;
     return html.replace(placeholder, `<div id="root">${ body }</div>`);
   },
-  getRenderedString(url) {
-    const context = {};
+  getRenderedString(url, context) {
     const body = renderToString(
       <StaticRouter location={ url } context={ context }>
         <App />
@@ -39,9 +38,9 @@ const SSRUtils = {
   },
   replyRenderedStringWithPreAjax: function(req, res, axiosConfig, varName) {
     fs.readFile(htmlPath, 'utf-8', (err,html) => {
-      const body = SSRUtils.getRenderedString(req.url);
-      html = SSRUtils.injectBody(html,body);
       axiosInstance.request(axiosConfig).then( ajaxRes => {
+        const body = SSRUtils.getRenderedString(req.url, ajaxRes.data);
+        html = SSRUtils.injectBody(html,body);
         html = SSRUtils.injectGlobalVariable(html, ajaxRes.data, varName);
       }).finally(() => {
         res.send(html);
