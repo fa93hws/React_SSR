@@ -15,18 +15,20 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-plugin-css-modules-transform": "^1.6.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.11.6",
+    "ignore-styles": "^5.0.1",
     "nodemon": "^1.17.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./ -d dist",
-    "start": "nodemon ./start-server.js --exec babel-node --presets=es2015,stage-2 --plugins=transform-decorators-legacy",
-    "start-once": "set NODE_ENV=development && babel-node ./start-server.js --presets es2015,stage-2"
+    "start": "set NODE_ENV=development&& nodemon ./start-server.js --exec babel-node --presets=es2015,stage-2 --plugins=transform-decorators-legacy",
+    "start-once": "set NODE_ENV=development&& babel-node ./start-server.js --presets es2015,stage-2 --plugins=transform-decorators-legacy"
   },
   "author": "",
   "license": "ISC"

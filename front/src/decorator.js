@@ -9,11 +9,13 @@ export function enableSSR(varName) {
     descriptor.value = function(...args) {
       if (varName in window && window[varName].ssr === true) {
         return new Promise((resolve,reject) => {
-          resolve(window[varName]);
+          const data = window[varName];
           delete window[varName];
+          document.getElementById("ssr-placeholder").innerHTML = "";
+          resolve(data);
         });
       } else {
-        return originMethod(args);
+        return originMethod(...args);
       } // whether varName exists
     } // override descriptor value
   } // main decorator
@@ -23,31 +25,15 @@ export function injectSSRState(target) {
   class Output extends target {
     constructor(props) {
       super(props);
-      if (typeof props.staticContext !== 'undefined') {
+      if (typeof props.staticContext !== 'undefined' && props.staticContext.ssr === true) {
         this.state = {
           ...this.state,
-          ...props.staticContext,
+          ...props.staticContext.data,
           pageAjaxStatus: EAjaxStatus.done
-        }
-      }
-    }
-  }
+        } // setState
+      } // if comes from the server side
+      
+    } // constructor
+  } // injected class
   return Output;
 }
-
-// export function connectAndLogHistory (mapStateToProps: ((state: IStoreState) => any)|null, mapDispatchToProps: ((dispatch: Dispatch<AnyAction>) => any)|null) {
-//   return <T extends { new (...args: any[]):  React.Component<IPathLogger|{}> }> (target: T) => {
-//     const original = target;
-//     @(connect(mapStateToProps, mapDispatchToProps) as any)
-//     class Output extends target {
-//       public componentDidMount () {
-//         if (typeof original.prototype.componentDidMount !== 'undefined') {
-//           original.prototype.componentDidMount.call(this);
-//         }
-//         const props = this.props as IPathLogger;
-//         props.pushHistory(props.history.location.pathname);
-//       } // did mount
-//     } // output class
-//     return Output;
-//   } // return decorator
-// } // return decorator factory

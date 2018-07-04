@@ -1,4 +1,5 @@
 import axios from 'axios';
+import 'ignore-styles'
 import { renderToString } from 'react-dom/server';
 import React from 'react';
 import StaticRouter from 'react-router-dom/StaticRouter';
@@ -28,9 +29,9 @@ const SSRUtils = {
     const placeholder = `<div id="root"></div>`;
     return html.replace(placeholder, `<div id="root">${ body }</div>`);
   },
-  getRenderedString(url, context) {
+  getRenderedString(url, contextData) {
     const body = renderToString(
-      <StaticRouter location={ url } context={ context }>
+      <StaticRouter location={ url } context={{ data: contextData, ssr: true }}>
         <App />
       </StaticRouter>
     );
