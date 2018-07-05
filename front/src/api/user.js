@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 import { enableSSR } from '../decorator';
+import { ESSRVarName } from '../enums'
 
 class UserApi {
-  @enableSSR('__ssr_user_page__')
+  @enableSSR(ESSRVarName.user)
   getUser(id) {
     return axios.get(`/api/user/${ id }`);
   }

@@ -23,6 +23,9 @@ export function enableSSR(varName) {
 
 export function injectSSRState(varName) {
   return (target) => {
+    if (typeof varName === 'undefined' || varName === '') {
+      return target;
+    }
     class Output extends target {
       constructor(props) {
         super(props);

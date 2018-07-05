@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { injectSSRState } from '../../decorator';
-import { EAjaxStatus } from '../../enums';
+import { EAjaxStatus,ESSRVarName } from '../../enums';
 import userApi from '../../api/user';
 import UserComp from './comp';
 
-@injectSSRState('__ssr_user_page__')
+@injectSSRState(ESSRVarName.user)
 export default class User extends React.Component {
   constructor(props) {
     super(props);
